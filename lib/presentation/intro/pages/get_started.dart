@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
@@ -6,6 +7,7 @@ import 'package:spotify/presentation/choose_mode/pages/choose_mode.dart';
 
 import '../../../core/configs/assets/app_images.dart';
 import '../../../core/configs/theme/app_colors.dart';
+import '../../choose_mode/bloc/theme_cubit.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -33,13 +35,18 @@ class GetStartedPage extends StatelessWidget {
                   child: SvgPicture.asset(AppVectors.logo),
                 ),
                 Spacer(),
-                Text(
-                  'Enjoy listening to music ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+                BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, mode) {
+                    print('started mode： $mode');
+                    return Text(
+                      'Enjoy listening to music ',
+                      style: TextStyle(
+                        color: mode == ThemeMode.light ? Colors.white : AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 21),
                 const Text(
@@ -66,7 +73,6 @@ class GetStartedPage extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
     );
