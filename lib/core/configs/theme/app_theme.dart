@@ -10,9 +10,10 @@ class AppTheme {
     fontFamily: 'satoshi',
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+          elevation: 0,
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,        // 文字颜色 👈 就是这个
-          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30)
         )
@@ -27,9 +28,10 @@ class AppTheme {
       fontFamily: 'satoshi',
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+              elevation: 0,
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
-              textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)
               )
