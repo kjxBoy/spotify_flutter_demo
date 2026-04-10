@@ -1,11 +1,11 @@
-class CreateUserReq {
+class SignupParams {
   final String fullName;
   final String email;
   final String password;
 
-  CreateUserReq({
+  SignupParams({
     required this.fullName,
     required this.email,
-    required this.password
+    required this.password,
   });
 }
