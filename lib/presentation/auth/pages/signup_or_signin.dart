@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/auth/pages/phone_signin.dart';
 import 'package:spotify/presentation/auth/pages/signin.dart';
 import 'package:spotify/presentation/auth/pages/signup.dart';
 
@@ -18,7 +19,7 @@ class SignupOrLogin extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          BasicAppbar(),
+          const BasicAppbar(),
           Align(
             alignment: Alignment.topRight,
             child: SvgPicture.asset(AppVectors.topPattern),
@@ -39,13 +40,13 @@ class SignupOrLogin extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(AppVectors.logo),
-                  SizedBox(height: 55),
-                  Text(
+                  const SizedBox(height: 55),
+                  const Text(
                     'Enjoy Listening To Music',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Spotify is a proprietary Swedish audio streaming and media services provider',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -54,32 +55,29 @@ class SignupOrLogin extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Row(
                     children: [
                       Expanded(
-                        flex: 1,
                         child: BasicAppButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => SignupPage(),
+                                builder: (_) => SignupPage(),
                               ),
                             );
                           },
                           title: 'Register',
                         ),
                       ),
-
                       Expanded(
-                        flex: 1,
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => SigninPage(),
+                                builder: (_) => SigninPage(),
                               ),
                             );
                           },
@@ -96,6 +94,23 @@ class SignupOrLogin extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 16),
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => PhoneSigninPage()),
+                      );
+                    },
+                    icon: const Icon(Icons.phone),
+                    label: const Text('Continue with Phone Number'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
                   ),
                 ],
               ),

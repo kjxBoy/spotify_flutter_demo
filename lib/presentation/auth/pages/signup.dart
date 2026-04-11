@@ -5,7 +5,8 @@ import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/domain/models/auth/signup_params.dart';
 import 'package:spotify/domain/usecases/auth/signup.dart';
-import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/presentation/auth/pages/verify_email_otp.dart';
+import 'package:spotify/presentation/auth/pages/signin.dart';
 
 import '../../../service_locator.dart';
 
@@ -48,19 +49,21 @@ class SignupPage extends StatelessWidget {
 
                 result.fold(
                   (l) {
-                    var snackBar = SnackBar(
-                      content: Text(l),
-                      behavior: SnackBarBehavior.floating,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l),
+                        behavior: SnackBarBehavior.floating,
+                      ),
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   (r) {
-                    Navigator.pushAndRemoveUntil(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => const RootPage(),
+                        builder: (_) => VerifyEmailOtpPage(
+                          email: _email.text,
+                        ),
                       ),
-                      (route) => false,
                     );
                   },
                 );
@@ -94,6 +97,7 @@ class SignupPage extends StatelessWidget {
   Widget _emailField(BuildContext context) {
     return TextField(
       controller: _email,
+      keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
         hintText: 'Enter Email',
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -103,6 +107,7 @@ class SignupPage extends StatelessWidget {
   Widget _passwordField(BuildContext context) {
     return TextField(
       controller: _password,
+      obscureText: true,
       decoration: const InputDecoration(
         hintText: 'Password',
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -119,7 +124,15 @@ class SignupPage extends StatelessWidget {
             'Do you have an account? ',
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
           ),
-          TextButton(onPressed: () {}, child: const Text('Sign In')),
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => SigninPage()),
+              );
+            },
+            child: const Text('Sign In'),
+          ),
         ],
       ),
     );

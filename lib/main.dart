@@ -1,6 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloudbase_flutter/cloudbase_flutter.dart';
+import 'package:spotify/cloudbase_options.dart';
 import 'package:spotify/service_locator.dart';
-import 'firebase_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,43 +19,37 @@ Future<void> main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
-  // Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  final cloudbaseApp = await CloudBase.init(
+    env: CloudbaseOptions.envId,
+    region: CloudbaseOptions.region,
   );
 
-  // 定位服务
-  await initializeDependencies();
+  await initializeDependencies(cloudbaseApp: cloudbaseApp);
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ThemeCubit())
+        BlocProvider(create: (_) => ThemeCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, mode) {
-          print('main mode： $mode');
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Spotify',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: mode,
             debugShowCheckedModeBanner: false,
-            home: const SplashPage()
+            home: const SplashPage(),
           );
-        }
+        },
       ),
     );
   }
 }
-

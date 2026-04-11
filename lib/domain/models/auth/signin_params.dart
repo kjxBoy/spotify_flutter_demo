@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class SigninParams {
   final String email;
   final String password;

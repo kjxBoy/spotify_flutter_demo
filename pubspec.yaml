@@ -17,8 +17,7 @@ dependencies:
   flutter_bloc:
   hydrated_bloc:
   path_provider:
-  firebase_core:
-  firebase_auth:
+  cloudbase_flutter: ^1.0.7
   get_it:
   dartz:
 
