@@ -5,7 +5,7 @@ import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/domain/models/auth/verify_otp_params.dart';
 import 'package:spotify/domain/usecases/auth/verify_phone_otp.dart';
-import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/service_locator.dart';
 
 class VerifyPhoneOtpPage extends StatelessWidget {
@@ -57,7 +57,7 @@ class VerifyPhoneOtpPage extends StatelessWidget {
                   (r) {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (_) => const RootPage()),
+                      MaterialPageRoute(builder: (_) => const HomePage()),
                       (route) => false,
                     );
                   },
