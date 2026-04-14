@@ -1,14 +1,14 @@
-import 'dart:ffi';
-
-import '../../../domain/entities/song/songEntity.dart';
+import '../../../domain/entities/song/SongEntity.dart';
 
 class SongModel {
-  String? title;
-  String? artist;
-  num? duration;
-  Float? releaseDate;
-  bool? isFavorite;
   String? songId;
+  String? artist;
+  String? title;
+
+  num? duration;
+  double? releaseDate;
+  bool? isFavorite;
+
 
   SongModel({
     required this.title,
@@ -23,7 +23,7 @@ class SongModel {
     title = data['title'];
     artist = data['artist'];
     duration = data['duration'];
-    releaseDate = data['releaseDate'];
+    releaseDate = (data['releaseDate'] as num?)?.toDouble();
   }
 }
 

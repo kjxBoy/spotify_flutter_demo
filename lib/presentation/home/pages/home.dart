@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
+import 'package:spotify/domain/usecases/song/get_news_songs.dart';
 
 import '../../../common/helpers/is_dark_mode.dart';
 import '../../../core/configs/assets/app_vectors.dart';
 import '../../../core/configs/theme/app_colors.dart';
+import '../../../service_locator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +24,24 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
 
+    loadData();
+
     _tabController = TabController(length: 4, vsync: this);
+  }
+
+
+  Future<void> loadData() async {
+    final result = await sl<GetNewsSongsUseCase>().call();
+
+    result.fold(
+      (error) => debugPrint('[getNewsSongs] ❌ 失败: $error'),
+      (songs) {
+        debugPrint('[getNewsSongs] ✅ 获取 ${songs.length} 首歌曲');
+        for (final song in songs) {
+          debugPrint('  - ${song.title} / ${song.artist} (${song.releaseDate.toInt()})');
+        }
+      },
+    );
   }
 
   @override
