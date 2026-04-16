@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/domain/usecases/song/get_news_songs.dart';
+import 'package:spotify/presentation/home/widgets/news_songs.dart';
 
 import '../../../common/helpers/is_dark_mode.dart';
 import '../../../core/configs/assets/app_vectors.dart';
@@ -24,27 +25,9 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
 
-    loadData();
-
     _tabController = TabController(length: 4, vsync: this);
 
 
-
-  }
-
-
-  Future<void> loadData() async {
-    final result = await sl<GetNewsSongsUseCase>().call();
-
-    result.fold(
-      (error) => debugPrint('[getNewsSongs] ❌ 失败: $error'),
-      (songs) {
-        debugPrint('[getNewsSongs] ✅ 获取 ${songs.length} 首歌曲');
-        for (final song in songs) {
-          debugPrint('  - ${song.title} / ${song.artist} (${song.releaseDate.toInt()})');
-        }
-      },
-    );
   }
 
   @override
@@ -55,7 +38,24 @@ class _HomePageState extends State<HomePage>
         title: SvgPicture.asset(AppVectors.logo, height: 40, width: 40),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [_homeTopCard(), _tabs()]),
+        child: Column(
+          children: [
+            _homeTopCard(),
+            _tabs(),
+            SizedBox(
+              height: 260,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  NewsSongs(),
+                  Container(color: Colors.red),
+                  Container(color: Colors.grey),
+                  Container(color: Colors.blueGrey),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -91,10 +91,7 @@ class _HomePageState extends State<HomePage>
       dividerColor: Colors.transparent,
       // 👇 让 Tab 内容居中
       tabAlignment: TabAlignment.start,
-      padding: const EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 10
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       labelStyle: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 16,
@@ -103,7 +100,9 @@ class _HomePageState extends State<HomePage>
       unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 16,
-        color: context.isDarkMode ? Colors.white.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.5),
+        color: context.isDarkMode
+            ? Colors.white.withValues(alpha: 0.5)
+            : Colors.black.withValues(alpha: 0.5),
       ),
       tabs: const [
         Tab(text: 'News'),
@@ -112,5 +111,18 @@ class _HomePageState extends State<HomePage>
         Tab(text: 'Podcasts'),
       ],
     );
+  }
+
+  Future<void> loadData() async {
+    final result = await sl<GetNewsSongsUseCase>().call();
+
+    result.fold((error) => debugPrint('[getNewsSongs] ❌ 失败: $error'), (songs) {
+      debugPrint('[getNewsSongs] ✅ 获取 ${songs.length} 首歌曲');
+      for (final song in songs) {
+        debugPrint(
+          '  - ${song.title} / ${song.artist} (${song.releaseDate.toInt()})',
+        );
+      }
+    });
   }
 }
