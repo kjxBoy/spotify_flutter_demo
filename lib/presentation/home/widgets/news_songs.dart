@@ -19,9 +19,6 @@ class NewsSongs extends StatelessWidget {
         height: 200,
         child: BlocBuilder<NewsSongsCubit, NewsSongsState>(
           builder: (context, state) {
-
-            debugPrint('[getState ✅ $state');
-
             if (state is NewsSongsLoading) {
               return Container(
                 alignment: Alignment.center,
@@ -42,6 +39,7 @@ class NewsSongs extends StatelessWidget {
 
   Widget _songs(List<SongEntity> songs) {
     return ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemBuilder: (context,index) {
