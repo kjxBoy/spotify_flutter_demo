@@ -19,8 +19,7 @@ class SongRepositoryImpl extends SongRepository {
 
   @override
   Future<Either<dynamic, dynamic>> getPlayList() {
-    // TODO: implement getPlayList
-    throw UnimplementedError();
+    return sl<SongCloudbaseService>().getPlayList();
   }
 
   @override

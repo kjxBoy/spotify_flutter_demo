@@ -13,6 +13,7 @@ import 'package:spotify/domain/usecases/auth/verify_signup_otp.dart';
 import 'package:spotify/domain/usecases/song/get_news_songs.dart';
 
 import 'data/source/song/song_cloudbase_service.dart';
+import 'domain/usecases/song/get_play_list.dart';
 
 final sl = GetIt.instance;
 
@@ -38,4 +39,6 @@ Future<void> initializeDependencies({required CloudBase cloudbaseApp}) async {
   sl.registerSingleton<SongRepository>(SongRepositoryImpl());
 
   sl.registerSingleton<SongCloudbaseService>(SongCloudbaseServiceImpl());
+
+  sl.registerSingleton<GetPlayListUseCase>(GetPlayListUseCase());
 }

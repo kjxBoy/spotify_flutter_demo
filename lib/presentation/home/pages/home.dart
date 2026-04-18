@@ -6,6 +6,7 @@ import 'package:spotify/presentation/home/widgets/news_songs.dart';
 import '../../../common/helpers/is_dark_mode.dart';
 import '../../../core/configs/assets/app_vectors.dart';
 import '../../../core/configs/theme/app_colors.dart';
+import '../widgets/play_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,6 +50,7 @@ class _HomePageState extends State<HomePage>
                 ],
               ),
             ),
+            PlayList(),
           ],
         ),
       ),

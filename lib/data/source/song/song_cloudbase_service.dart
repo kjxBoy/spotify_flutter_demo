@@ -28,7 +28,7 @@ class SongCloudbaseServiceImpl extends SongCloudbaseService {
     try {
       final result = await _app.callFunction(
         name: 'getNewSongs',
-        data: {'limit': 50, 'skip': 0},
+        data: {'limit': 4, 'skip': 0},
       );
       if (result.message != null && result.code != null && result.code != '0') {
         return Left(result.message ?? '获取歌曲列表失败');
@@ -55,9 +55,34 @@ class SongCloudbaseServiceImpl extends SongCloudbaseService {
   }
 
   @override
-  Future<Either<dynamic, dynamic>> getPlayList() {
-    // TODO: implement getPlayList
-    throw UnimplementedError();
+  Future<Either<dynamic, dynamic>> getPlayList() async {
+    try {
+      final result = await _app.callFunction(
+        name: 'getNewSongs',
+        data: {'limit': 50, 'skip': 4},
+      );
+      if (result.message != null && result.code != null && result.code != '0') {
+        return Left(result.message ?? '获取歌曲列表失败');
+      }
+
+      final resultData = result.result;
+      final records = resultData is Map
+          ? (resultData['data'] as List?) ?? []
+          : resultData is List
+          ? resultData
+          : [];
+      final songs = records.map((record) {
+        final map = Map<String, dynamic>.from(record as Map);
+        final model = SongModel.fromJson(map);
+        model.songId = map['_id']?.toString();
+        model.isFavorite = (map['isFavorite'] as bool?) ?? false;
+        return model.toEntity();
+      }).toList();
+
+      return Right(songs);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
   @override
