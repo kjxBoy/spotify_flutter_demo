@@ -6,6 +6,7 @@ import 'package:spotify/presentation/home/bloc/play_list_cubit.dart';
 
 import '../../../common/widgets/favorite_button/favorite_button.dart';
 import '../../../domain/entities/song/SongEntity.dart';
+import '../../song_player/pages/song_player.dart';
 import '../bloc/play_list_state.dart';
 
 class PlayList extends StatelessWidget {
@@ -72,7 +73,7 @@ class PlayList extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (BuildContext context) => Container()),
+              MaterialPageRoute(builder: (BuildContext context) => SongPlayerPage(songEntity: songs[index])),
             );
           },
           child: Row(

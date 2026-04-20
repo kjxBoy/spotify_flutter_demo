@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/domain/entities/song/SongEntity.dart';
 import 'package:spotify/presentation/home/bloc/news_songs_cubit.dart';
 import 'package:spotify/presentation/home/bloc/news_songs_state.dart';
+import 'package:spotify/presentation/song_player/pages/song_player.dart';
 
 import '../../../common/helpers/is_dark_mode.dart';
 import '../../../core/configs/assets/app_urls.dart';
@@ -49,7 +50,7 @@ class NewsSongs extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context)
-                      => Container(color: Colors.grey)
+                      => SongPlayerPage(songEntity: songs[index])
                   )
               );
             },

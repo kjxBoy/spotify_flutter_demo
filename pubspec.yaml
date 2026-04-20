@@ -20,6 +20,8 @@ dependencies:
   cloudbase_flutter: ^1.0.7
   get_it:
   dartz:
+  just_audio:
+  audio_session: ^0.2.3
 
 dev_dependencies:
   flutter_test:
