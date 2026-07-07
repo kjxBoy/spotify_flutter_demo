@@ -27,10 +27,11 @@ class SongPlayerPage extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (_) => SongPlayerCubit()..loadSong(
-          AppURLs.songMusicUrl(songEntity.artist, songEntity.title),
-          fallbackDuration: Duration(seconds: songEntity.duration.toInt()),
-        ),
+        create: (_) => SongPlayerCubit()
+          ..loadSong(
+            AppURLs.songMusicUrl(songEntity.artist, songEntity.title),
+            fallbackDuration: Duration(seconds: songEntity.duration.toInt()),
+          ),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -48,6 +49,7 @@ class SongPlayerPage extends StatelessWidget {
       ),
     );
   }
+
   // https://spotify-demo-6gp153e810cbb8fc-1331434937.tcloudbaseapp.com/spotify_music/DuaLipa-Levitating.mp3
   // https://spotify-demo-6gp153e810cbb8fc-1331434937.tcloudbaseapp.com/spotify_music/DuaLipa-Levitating.mp3
   Widget _songCover(BuildContext context) {
@@ -67,6 +69,7 @@ class SongPlayerPage extends StatelessWidget {
 
   Widget _songDetail() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,6 +84,14 @@ class SongPlayerPage extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
             ),
           ],
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.favorite_outline_outlined,
+            size: 25,
+            color: AppColors.darkGrey,
+          ),
         ),
       ],
     );
@@ -109,9 +120,9 @@ class SongPlayerPage extends StatelessWidget {
                     .inSeconds
                     .toDouble(),
                 onChanged: (value) {
-                  context
-                      .read<SongPlayerCubit>()
-                      .seekTo(Duration(seconds: value.toInt()));
+                  context.read<SongPlayerCubit>().seekTo(
+                    Duration(seconds: value.toInt()),
+                  );
                 },
               ),
               const SizedBox(height: 20),
