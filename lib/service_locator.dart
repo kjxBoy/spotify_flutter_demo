@@ -10,7 +10,10 @@ import 'package:spotify/domain/usecases/auth/signin.dart';
 import 'package:spotify/domain/usecases/auth/signup.dart';
 import 'package:spotify/domain/usecases/auth/verify_phone_otp.dart';
 import 'package:spotify/domain/usecases/auth/verify_signup_otp.dart';
+import 'package:spotify/domain/usecases/song/add_or_remove_favorite_song.dart';
+import 'package:spotify/domain/usecases/song/get_favorite_songs.dart';
 import 'package:spotify/domain/usecases/song/get_news_songs.dart';
+import 'package:spotify/domain/usecases/song/is_favorite_song.dart';
 
 import 'data/source/song/song_cloudbase_service.dart';
 import 'domain/usecases/song/get_play_list.dart';
@@ -41,4 +44,12 @@ Future<void> initializeDependencies({required CloudBase cloudbaseApp}) async {
   sl.registerSingleton<SongCloudbaseService>(SongCloudbaseServiceImpl());
 
   sl.registerSingleton<GetPlayListUseCase>(GetPlayListUseCase());
+
+  sl.registerSingleton<AddOrRemoveFavoriteSongUseCase>(
+    AddOrRemoveFavoriteSongUseCase(),
+  );
+
+  sl.registerSingleton<GetFavoriteSongsUseCase>(GetFavoriteSongsUseCase());
+
+  sl.registerSingleton<IsFavoriteSongUseCase>(IsFavoriteSongUseCase());
 }

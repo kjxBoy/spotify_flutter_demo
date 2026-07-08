@@ -8,8 +8,7 @@ import '../../source/song/song_cloudbase_service.dart';
 class SongRepositoryImpl extends SongRepository {
   @override
   Future<Either<dynamic, dynamic>> addOrRemoveFavoriteSongs(String songId) {
-    // TODO: implement addOrRemoveFavoriteSongs
-    throw UnimplementedError();
+    return sl<SongCloudbaseService>().addOrRemoveFavoriteSong(songId);
   }
 
   @override
@@ -24,14 +23,12 @@ class SongRepositoryImpl extends SongRepository {
 
   @override
   Future<Either<dynamic, dynamic>> getUserFavoriteSongs() {
-    // TODO: implement getUserFavoriteSongs
-    throw UnimplementedError();
+    return sl<SongCloudbaseService>().getUserFavoriteSongs();
   }
 
   @override
   Future<bool> isFavoriteSong(String songId) {
-    // TODO: implement isFavoriteSong
-    throw UnimplementedError();
+    return sl<SongCloudbaseService>().isFavoriteSong(songId);
   }
 
 }

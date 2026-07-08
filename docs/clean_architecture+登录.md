@@ -72,6 +72,55 @@
 
 > **注意：** 原书并没有定义 Repository 和 DataSource 这两个词，这是行业约定俗成的拆分。Repository 承担"数据编排"（Interface Adapters 的主要职责），DataSource 承担"数据执行"（Frameworks & Drivers 的数据端部分）。
 
+### Domain 层是什么？
+
+**Domain 层不是架构里的第五个独立层级，而是一个目录/模块的命名**，代表"与外部技术完全无关的纯业务区域"。
+
+在本项目中，`lib/domain/` 目录包含了架构里最内侧的两层内容：
+
+```
+lib/domain/
+  ├── entities/       ← Entity 层（纯业务数据对象，无任何框架依赖）
+  ├── usecases/       ← UseCase 层（业务规则与流程编排）
+  └── repository/     ← Repository 的抽象接口（注意：只有接口，没有实现！）
+```
+
+与之对应，`lib/data/` 目录包含外层的实现：
+
+```
+lib/data/
+  ├── repository/     ← Repository 的具体实现（Interface Adapters）
+  └── source/         ← DataSource 的具体实现（Frameworks & Drivers 数据端）
+```
+
+**对应到架构分层图：**
+
+```
+┌──────────────────────────────────────────────────┐
+│  Frameworks & Drivers   UI 层 + DataSource 层     │  lib/presentation/ + lib/data/source/
+│  Interface Adapters     Repository 实现层          │  lib/data/repository/
+│ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ Domain 边界 ─ ─ ─ ─ ─ ─ ─ ─ │
+│  Use Cases              UseCase 层                │  lib/domain/usecases/
+│  Entities               Entity 层                 │  lib/domain/entities/
+│                         Repository 抽象接口        │  lib/domain/repository/
+└──────────────────────────────────────────────────┘
+```
+
+**为什么 Repository 接口放在 Domain 层？**
+
+这是依赖倒置原则（DIP）的核心体现：
+
+```
+❌ 错误：Repository 接口放在 Data 层
+   Domain 层 import Data 层 → 内层依赖外层 → 违反架构
+
+✅ 正确：Repository 接口放在 Domain 层
+   Data 层 import Domain 层，实现其接口
+   依赖方向：外层(Data) → 内层(Domain) ✅
+```
+
+效果：UseCase 只知道"我有一个可以操作数据的 Repository 接口"，完全不知道背后是 Firebase、CloudBase 还是本地数据库。
+
 ---
 
 ## 3. 各层职责详解（含绝对禁忌）
