@@ -73,7 +73,10 @@ class PlayList extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (BuildContext context) => SongPlayerPage(songEntity: songs[index])),
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    SongPlayerPage(songEntity: songs[index]),
+              ),
             );
           },
           child: Row(
@@ -124,7 +127,7 @@ class PlayList extends StatelessWidget {
                 children: [
                   Text(songs[index].duration.toString().replaceAll('.', ':')),
                   const SizedBox(width: 20),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.favorite_rounded)),
+                  FavoriteButton(songEntity: songs[index]),
                 ],
               ),
             ],

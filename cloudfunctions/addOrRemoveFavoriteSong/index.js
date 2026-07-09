@@ -3,9 +3,10 @@ const tcb = require('@cloudbase/node-sdk');
 
 const app = tcb.init({ env: tcb.SYMBOL_CURRENT_ENV });
 const db = app.database();
+const auth = app.auth();
 
 exports.main = async (event, context) => {
-  const uid = context.OPENID;
+  const { uid } = auth.getUserInfo();
   if (!uid) {
     return { code: 401, message: '用户未登录' };
   }
